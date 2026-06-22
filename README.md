@@ -4,6 +4,20 @@
 
 A full-stack e-commerce web application built with Spring Boot. Supports three roles — Admin, Seller, and Buyer — with product listings, shopping cart, order management, payments, and reviews.
 
+## Screenshots
+
+| Login | Sign Up |
+|-------|---------|
+| ![Login](screenshots/login.png) | ![Sign Up](screenshots/signup.png) |
+
+| Product Listing | Seller Dashboard |
+|-----------------|-----------------|
+| ![Products](screenshots/products.png) | ![Seller](screenshots/seller-dashboard.png) |
+
+| Shopping Cart | Admin Panel |
+|--------------|-------------|
+| ![Cart](screenshots/cart.png) | ![Admin](screenshots/admin.png) |
+
 ## Tech Stack
 
 | Layer | Technology |
