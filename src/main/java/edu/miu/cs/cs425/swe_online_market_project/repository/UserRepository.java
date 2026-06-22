@@ -11,6 +11,10 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByUserName(String userName);
 
-    @Query(value = "select u from User u inner join u.roles roles where roles.roleType = 'SELLER'")
+    boolean existsByUserName(String userName);
+
+    boolean existsByEmail(String email);
+
+    @Query(value = "select u from User u inner join u.roles roles where roles.roleType = 'ROLE_SELLER'")
     List<User> findUsersBySellerRole();
 }

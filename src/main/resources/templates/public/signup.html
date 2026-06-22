@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/master-layout}">
+<head>
+    <title>OnlineMarket - Sign Up</title>
+</head>
+<body>
+    <div layout:fragment="content" style="padding-top:1em;" class="container">
+        <h3>Create Account</h3>
+        <hr/>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-6">
+                    <div class="card border-secondary mb-4" style="max-width: 60rem;">
+                        <div class="card-header">New Online Market Account</div>
+                        <div class="card-body">
+                            <h4 class="card-title">Register</h4>
+
+                            <div th:if="${errorMessage}" class="alert alert-dismissible alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <span th:text="${errorMessage}"></span>
+                            </div>
+
+                            <form th:action="@{/onlinemarket/public/signup}" th:object="${signUp}" method="post">
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <input id="firstName" th:field="*{firstName}" type="text" class="form-control"
+                                           th:classappend="${#fields.hasErrors('firstName')} ? 'is-invalid'"/>
+                                    <div class="invalid-feedback" th:errors="*{firstName}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input id="lastName" th:field="*{lastName}" type="text" class="form-control"
+                                           th:classappend="${#fields.hasErrors('lastName')} ? 'is-invalid'"/>
+                                    <div class="invalid-feedback" th:errors="*{lastName}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="userName">Username</label>
+                                    <input id="userName" th:field="*{userName}" type="text" class="form-control"
+                                           th:classappend="${#fields.hasErrors('userName')} ? 'is-invalid'"/>
+                                    <div class="invalid-feedback" th:errors="*{userName}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input id="email" th:field="*{email}" type="email" class="form-control"
+                                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"/>
+                                    <div class="invalid-feedback" th:errors="*{email}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input id="password" th:field="*{password}" type="password" class="form-control"
+                                           th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"/>
+                                    <div class="invalid-feedback" th:errors="*{password}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="role">Account Type</label>
+                                    <select id="role" th:field="*{role}" class="form-control"
+                                            th:classappend="${#fields.hasErrors('role')} ? 'is-invalid'">
+                                        <option value="">-- Select --</option>
+                                        <option value="BUYER">Buyer</option>
+                                        <option value="SELLER">Seller (requires admin approval)</option>
+                                    </select>
+                                    <div class="invalid-feedback" th:errors="*{role}"></div>
+                                </div>
+                                <div style="float:right;">
+                                    <a href="/onlinemarket/public/login" class="btn btn-outline-warning">Cancel</a>&nbsp;&nbsp;&nbsp;
+                                    <button id="btnSubmit" type="submit" class="btn btn-outline-success">Create Account</button>
+                                </div>
+                            </form>
+                            <div style="margin-top:1em;">
+                                Already have an account? <a th:href="@{/onlinemarket/public/login}">Sign In</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <th:block layout:fragment="footer"></th:block>
+
+</body>
+</html>
