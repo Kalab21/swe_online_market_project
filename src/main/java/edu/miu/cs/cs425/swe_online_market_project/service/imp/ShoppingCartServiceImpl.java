@@ -33,13 +33,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCart getShoppingCartByBuyer(Long id) {
-        return shoppingCartRepository.findByBuyerUserId(id).orElseGet(null);
+        return shoppingCartRepository.findByBuyerUserId(id)
+                .orElseThrow(() -> new RuntimeException("Cart not found for buyer: " + id));
     }
 
     @Override
     public ShoppingCart addProductToShoppingCart(Long cartId, Product product) {
-        ShoppingCart cart= shoppingCartRepository.findById(cartId).orElseGet(null);
-        List<Product> products=  cart.getProducts();
+        ShoppingCart cart = shoppingCartRepository.findById(cartId)
+                .orElseThrow(() -> new RuntimeException("Cart not found: " + cartId));
+        List<Product> products = cart.getProducts();
         products.add(product);
         cart.setProducts(products);
         return shoppingCartRepository.save(cart);
@@ -47,27 +49,27 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void deleteProductFromCart(Long productId, Long cartId) {
-        ShoppingCart cart= shoppingCartRepository.findById(cartId).orElseGet(null);
-        List<Product> products=  cart.getProducts();
+        ShoppingCart cart = shoppingCartRepository.findById(cartId)
+                .orElseThrow(() -> new RuntimeException("Cart not found: " + cartId));
+        List<Product> products = cart.getProducts();
         for (int i = 0; i < products.size(); i++) {
-            if(products.get(i).getProductId()==productId){
+            if (products.get(i).getProductId() == productId) {
                 products.remove(i);
-                return;
+                break;
             }
         }
         cart.setProducts(products);
         shoppingCartRepository.save(cart);
-
     }
 
     @Override
     public void deleteAllProductsFromCart(Long cartId) {
-        ShoppingCart cart= shoppingCartRepository.findById(cartId).orElseGet(null);
-        List<Product> products=  cart.getProducts();
+        ShoppingCart cart = shoppingCartRepository.findById(cartId)
+                .orElseThrow(() -> new RuntimeException("Cart not found: " + cartId));
+        List<Product> products = cart.getProducts();
         products.clear();
         cart.setProducts(products);
         shoppingCartRepository.save(cart);
-
     }
 
 }
