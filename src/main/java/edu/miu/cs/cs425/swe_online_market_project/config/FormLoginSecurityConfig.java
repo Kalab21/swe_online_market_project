@@ -57,8 +57,8 @@ public class FormLoginSecurityConfig {
     }
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(this.userDetailsService);
-                //.passwordEncoder(passwordEncoder());
+                .userDetailsService(this.userDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 
 }
