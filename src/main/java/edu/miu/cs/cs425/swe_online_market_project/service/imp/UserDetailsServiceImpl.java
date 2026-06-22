@@ -36,6 +36,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     private static Collection<? extends GrantedAuthority> getAuthorities(User user) {
+        if (user.getRoles() == null) {
+            return AuthorityUtils.NO_AUTHORITIES;
+        }
         String[] userRoles = user.getRoles().stream().map((role) -> role.getRoleType()).toArray(String[]::new);
         Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
         return authorities;

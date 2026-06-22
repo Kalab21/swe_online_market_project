@@ -10,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -77,11 +76,9 @@ public class ProductController {
 
     // Delete
     @GetMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable("id") long id, HttpServletRequest request){
+    public String deleteProduct(@PathVariable("id") long id){
         productService.deleteById(id);
-        String referer = request.getHeader("Referer");
-//        return "redirect:/onlinemarket/secured/services/products/my-products/";
-        return "redirect:" + referer;
+        return "redirect:/onlinemarket/secured/services/products/my-products";
     }
     @GetMapping(value = "/search")
     public ModelAndView searchBooks(@RequestParam String searchString) {

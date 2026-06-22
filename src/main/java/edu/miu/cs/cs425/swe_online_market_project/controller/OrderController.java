@@ -2,6 +2,7 @@ package edu.miu.cs.cs425.swe_online_market_project.controller;
 
 import edu.miu.cs.cs425.swe_online_market_project.model.Order;
 import edu.miu.cs.cs425.swe_online_market_project.service.OrderService;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
-@RestController
+@Controller
 @RequestMapping(value="/orders")
 public class OrderController {
     private OrderService orderService;
@@ -35,7 +36,7 @@ public class OrderController {
 
 
     @PostMapping(value="/save-order")
-    public String saveOrder(@Valid @RequestBody Model model, @Valid @ModelAttribute("order") Order order, BindingResult result){
+    public String saveOrder(Model model, @Valid @ModelAttribute("order") Order order, BindingResult result){
         if (result.hasErrors()){
             model.addAttribute("errors", result.getAllErrors());
             return "order/order-form";

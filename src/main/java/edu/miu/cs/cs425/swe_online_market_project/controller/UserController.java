@@ -3,6 +3,7 @@ import edu.miu.cs.cs425.swe_online_market_project.model.User;
 import edu.miu.cs.cs425.swe_online_market_project.service.UserService;
 import edu.miu.cs.cs425.swe_online_market_project.service.imp.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,6 +49,7 @@ public class UserController {
         return "secured/services/admin/usrmgmt/list";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("update/{sellerId}")
     public String approveSeller(@PathVariable("sellerId") long sellerId){
         userService.approveSeller(sellerId);
