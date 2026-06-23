@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.markethub.app.controller.api.ProductApiController;
 import com.markethub.app.exception.ResourceNotFoundException;
 import com.markethub.app.model.Product;
+import com.markethub.app.repository.ShoppingCartRepository;
 import com.markethub.app.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ class ProductApiControllerTest {
     @Autowired MockMvc mockMvc;
     @Autowired ObjectMapper objectMapper;
     @MockBean ProductService productService;
+    @MockBean ShoppingCartRepository shoppingCartRepository;
 
     @Test
     @WithMockUser
