@@ -1,30 +1,50 @@
 <header th:fragment="header" xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns="http://www.w3.org/1999/html">
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a style="padding-right: 2em;" class="navbar-brand" href="/onlinemarket/secured/services">MarketHub</a>
+        <a class="navbar-brand" th:href="@{/onlinemarket/public/home}">MarketHub</a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarColor01">
+        <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav mr-auto">
-<!--                <li class="nav-item" style="border-left: white 1px solid; padding-left: 2em; padding-right: 2em;">-->
-<!--                    <a class="nav-link" href="/elibrary/public/about">About Us</a>-->
-<!--                </li>-->
-<!--                <li class="nav-item" style="border-left: white 1px solid; padding-left: 2em; padding-right: 2em;">-->
-<!--                    <a class="nav-link" href="/elibrary/public/virtualtour">Virtual Tour</a>-->
-<!--                </li>-->
-                <li sec:authorize="isAuthenticated()" class="nav-item" style="border-left: white 1px solid; padding-left: 2em; padding-right: 2em;">
-                    <a class="nav-link" href="/onlinemarket/secured/services">Services</a>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" th:href="@{/onlinemarket/secured/services}">Dashboard</a>
+                </li>
+                <li sec:authorize="hasAuthority('ROLE_BUYER') or hasAuthority('ROLE_ADMIN')" class="nav-item">
+                    <a class="nav-link" th:href="@{/onlinemarket/secured/services/products/list}">Products</a>
+                </li>
+                <li sec:authorize="hasAuthority('ROLE_SELLER')" class="nav-item">
+                    <a class="nav-link" th:href="@{/onlinemarket/secured/services/products/my-products}">My Products</a>
+                </li>
+                <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item">
+                    <a class="nav-link" th:href="@{/onlinemarket/secured/services/users/sellers}">Sellers</a>
+                </li>
+                <li sec:authorize="hasAuthority('ROLE_ADMIN')" class="nav-item">
+                    <a class="nav-link" th:href="@{/onlinemarket/secured/services/admin/usrmgmt/list}">All Users</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <span sec:authorize="isAnonymous()" style="color:#fff;padding-left: 2em; padding-right: 1em;">Welcome, Guest</span>
-                <span sec:authorize="isAuthenticated()" style="color:#fff;padding-left: 0em; padding-right: 0.5em;">Welcome, </span><span sec:authorize="isAuthenticated()" style="color:#fff;padding-left: 0em; padding-right: 0.5em;" sec:authentication="principal.username"></span>
-                <a sec:authorize="isAnonymous()" href="/onlinemarket/public/login" class="btn btn-secondary">Sign In</a>
-                <a sec:authorize="isAuthenticated()" href="/onlinemarket/public/logout" class="btn btn-secondary">Sign Out</a>
-            </form>
+            <ul class="navbar-nav ml-auto align-items-center">
+                <li sec:authorize="isAnonymous()" class="nav-item">
+                    <span class="nav-link text-white-50">Welcome, Guest</span>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <span class="nav-link text-white">
+                        <sec:authentication property="principal.username"/>
+                    </span>
+                </li>
+                <li sec:authorize="hasAuthority('ROLE_BUYER')" class="nav-item">
+                    <a class="nav-link" th:href="@{/onlinemarket/cart/me}">Cart</a>
+                </li>
+                <li sec:authorize="isAnonymous()" class="nav-item">
+                    <a th:href="@{/onlinemarket/public/login}" class="btn btn-outline-light btn-sm ml-2">Sign In</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a th:href="@{/onlinemarket/public/logout}" class="btn btn-outline-light btn-sm ml-2">Sign Out</a>
+                </li>
+            </ul>
         </div>
     </nav>
 </header>

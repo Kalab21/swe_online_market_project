@@ -1,106 +1,57 @@
-    <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org"
-          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-          xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-          layout:decorate="~{layouts/master-layout}"
-    >
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta name="description" content="">
-        <meta name="author" content="Kalabe">
-        <link rel="icon" href="favicon.ico">
-        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.2/cerulean/bootstrap.min.css" rel="stylesheet" integrity="sha384-EmRcsPP774S9MOi4ywB+JXUWjYnBdyInMzG2XsC5siZEUpexqxOMJW358dCYEjPu" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" th:href="@{/css/master.css}">
-        <title>MarketHub — Products</title>
-    </head>
-    <body>
-    <div layout:fragment="content" style="padding-top:1em;" class="container">
-
-
-
-        <div style="margin-top:1em;margin-bottom:1em;" class="container">
-            <div>
-                <span style="font-size: 2em; color: #32a5e7;">List of products</span>
-                <span style="float:right;">
-                <a class="btn btn-outline-success btn-lg" th:href="@{|/onlinemarket/secured/services/products/new-product|}">Add new product</a>
-                </span>
-            </div>
-            <!-- Search panel -->
-
-
-            <div style="font-size: 1em">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">sku</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">&nbsp;</th>
-                        <th scope="col">&nbsp;</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="product,iterStat : ${products}">
-
-                        <th scope="row" th:text="${iterStat.count}+${'.'}"></th>
-                        <td th:text="${product.sku}"></td>
-                        <td th:text="${product.name}"></td>
-                        <td th:text="${product.price}"></td>
-                        <td th:text="${product.description}"></td>
-                        <td th:text="${product.quantity}"></td>
-
-                        <td>
-                            <a th:href="@{|/onlinemarket/secured/services/products/update-product/${product.productId}|}">Edit product</a>
-                        </td>
-
-                        <td>
-                            <a th:href="@{|/onlinemarket/secured/services/products/delete/${product.productId}|}">Delete product</a>
-                        </td>
-
-                    </tr>
-                    <tr th:if="${products.size() < 1}">
-                        <td colspan="8" th:align="center">No Product found</td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="confirmDeleteBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Confirm Delete</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Are you sure you wish to delete this product data?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        <button type="button" class="btn btn-primary">Yes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <p>&nbsp;</p>
-
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/master-layout}">
+<head>
+    <title>MarketHub — My Products</title>
+</head>
+<body>
+<div layout:fragment="content" class="container" style="padding-top:2em;">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="page-title mb-0">My Products</h3>
+        <a th:href="@{/onlinemarket/secured/services/products/new-product}" class="btn btn-success">+ Add Product</a>
     </div>
-    </body>
-    </html>
+    <hr/>
+
+    <div th:if="${products != null and products.size() > 0}">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>SKU</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Description</th>
+                <th colspan="2"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product,stat : ${products}">
+                <td th:text="${stat.count}"></td>
+                <td th:text="${product.sku}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="'$' + ${product.price}"></td>
+                <td th:text="${product.quantity}"></td>
+                <td th:text="${product.description}"></td>
+                <td>
+                    <a th:href="@{|/onlinemarket/secured/services/products/update-product/${product.productId}|}"
+                       class="btn btn-sm btn-outline-primary">Edit</a>
+                </td>
+                <td>
+                    <a th:href="@{|/onlinemarket/secured/services/products/delete/${product.productId}|}"
+                       class="btn btn-sm btn-outline-danger"
+                       onclick="return confirm('Delete this product?')">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${products == null or products.size() == 0}" class="alert alert-info">
+        No products yet. <a th:href="@{/onlinemarket/secured/services/products/new-product}">Add your first product.</a>
+    </div>
+</div>
+<th:block layout:fragment="footer"></th:block>
+</body>
+</html>

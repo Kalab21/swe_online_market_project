@@ -41,10 +41,18 @@ public class ProductController {
         return "product/product-view";
     }
 
+    @GetMapping("/my-products")
+    public String displayMyProducts(Model model){
+        com.markethub.app.model.User cu = userDetailsServiceImpl.getCurrentUser();
+        model.addAttribute("products", productService.getAllProductsBySellerId(cu.getUserId()));
+        model.addAttribute("currentUser", cu);
+        return "secured/services/seller/sellerPage";
+    }
+
     @GetMapping("/my-products/{userId}")
-//    @PreAuthorize("hasRole('" + Role.SELLER + "')")
     public String displaySellerProducts(@PathVariable("userId") long userId, Model model){
         model.addAttribute("products", productService.getAllProductsBySellerId(userId));
+        model.addAttribute("currentUser", userDetailsServiceImpl.getCurrentUser());
         return "secured/services/seller/sellerPage";
     }
 
@@ -73,17 +81,20 @@ public class ProductController {
             model.addAttribute("errors", result.getAllErrors());
             return "secured/services/seller/product-form-new";
         }
+        com.markethub.app.model.User cu = userDetailsServiceImpl.getCurrentUser();
+        if (product.getSeller() == null) {
+            product.setSeller(cu);
+        }
         productService.saveProduct(product);
-        return "redirect:/onlinemarket/secured/services/products/my-products";
-//        return "secured/services/seller/sellerPage";
+        return "redirect:/onlinemarket/secured/services/products/my-products/" + cu.getUserId();
     }
-
 
     // Delete
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") long id){
+        long uid = userDetailsServiceImpl.getCurrentUser().getUserId();
         productService.deleteById(id);
-        return "redirect:/onlinemarket/secured/services/products/my-products";
+        return "redirect:/onlinemarket/secured/services/products/my-products/" + uid;
     }
     @GetMapping(value = "/search")
     public ModelAndView searchBooks(@RequestParam String searchString) {

@@ -45,9 +45,18 @@ public class ShoppingCartController {
     }
 
 
+    @GetMapping("/me")
+    public String loadMyCart(){
+        long uid = userDetailsServiceImpl.getCurrentUser().getUserId();
+        return "redirect:/onlinemarket/cart/" + uid;
+    }
+
     @GetMapping("/{buyerId}")
     public String loadShoppingCartById(@PathVariable("buyerId") long buyerId, Model model){
-        model.addAttribute("shoppingCart", shoppingCartService.getShoppingCartByBuyer(buyerId));
+        ShoppingCart cart = shoppingCartService.getShoppingCartByBuyer(buyerId);
+        double total = cart.getProducts().stream().mapToDouble(p -> p.getPrice()).sum();
+        model.addAttribute("shoppingCart", cart);
+        model.addAttribute("cartTotal", total);
         model.addAttribute("currentUser", userDetailsServiceImpl.getCurrentUser());
         return "secured/services/buyer/cart/cartPage";
     }

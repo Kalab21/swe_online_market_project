@@ -7,15 +7,40 @@
     <title>MarketHub</title>
 </head>
 <body>
-    <div layout:fragment="content" style="padding-top:1em;" class="container">
-        <h3>Welcome to MarketHub</h3>
+    <div layout:fragment="content" style="padding-top:2em;" class="container">
+        <div class="text-center mb-4">
+            <h1 class="display-4 font-weight-bold">Welcome to <span class="text-primary">MarketHub</span></h1>
+            <p class="lead text-muted">Your one-stop marketplace for buyers and sellers.</p>
+        </div>
         <hr/>
-        <div style="font-size: 1em">
-            <img th:src="@{/images/banner1.jpeg}"/><br/><br/>
-
-            <p sec:authorize="isAnonymous()">Already have access as a Member, Librarian or System Administrator? Then, simply <a href="/onlinemarket/public/login">Sign-In.</a>
-                to access the full range of services available to you, based on your role and access rights.</p>
-<!--            <p sec:authorize="isAuthorized()">Welcome authorized User</p>-->
+        <div class="row mt-4">
+            <div class="col-md-4 mb-4">
+                <div class="card border-primary h-100">
+                    <div class="card-header bg-primary text-white">Buy</div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="card-text">Browse products from our trusted sellers.</p>
+                        <a href="/onlinemarket/public/login" class="btn btn-primary mt-auto">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card border-success h-100">
+                    <div class="card-header bg-success text-white">Sell</div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="card-text">List your products and reach more customers.</p>
+                        <a href="/onlinemarket/public/signup" class="btn btn-success mt-auto">Start Selling</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card border-secondary h-100">
+                    <div class="card-header bg-secondary text-white">Sign In</div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="card-text">Already have an account? Sign in to continue.</p>
+                        <a href="/onlinemarket/public/login" class="btn btn-secondary mt-auto">Sign In</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
