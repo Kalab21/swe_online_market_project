@@ -1,6 +1,7 @@
 package com.markethub.app.service;
 
 import com.markethub.app.DTO.SignUp;
+import com.markethub.app.model.ShoppingCart;
 import com.markethub.app.model.User;
 import org.springframework.data.domain.Page;
 
@@ -23,4 +24,6 @@ public interface UserService {
     User approveSeller(long sellerId);
 
     User registerUser(SignUp signUp);
+
+    ShoppingCart ensureCart(Long userId);
 }

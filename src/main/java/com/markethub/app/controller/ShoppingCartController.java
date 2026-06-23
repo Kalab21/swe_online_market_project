@@ -46,7 +46,7 @@ public class ShoppingCartController {
     @GetMapping("/addproduct/{productId}")
     public String addProductToCartByUser(@PathVariable("productId") Long productId){
         long uid = userDetailsServiceImpl.getCurrentUser().getUserId();
-        ShoppingCart cart = shoppingCartService.getShoppingCartByBuyer(uid);
+        ShoppingCart cart = userService.ensureCart(uid);
         Product product = productService.getProductById(productId);
         shoppingCartService.addProductToShoppingCart(cart.getCartId(), product);
         return "redirect:/onlinemarket/secured/services/products/list";
@@ -61,7 +61,7 @@ public class ShoppingCartController {
 
     @GetMapping("/{buyerId}")
     public String loadShoppingCartById(@PathVariable("buyerId") long buyerId, Model model){
-        ShoppingCart cart = shoppingCartService.getShoppingCartByBuyer(buyerId);
+        ShoppingCart cart = userService.ensureCart(buyerId);
         double total = cart.getProducts().stream().mapToDouble(p -> p.getPrice()).sum();
         model.addAttribute("shoppingCart", cart);
         model.addAttribute("cartTotal", total);

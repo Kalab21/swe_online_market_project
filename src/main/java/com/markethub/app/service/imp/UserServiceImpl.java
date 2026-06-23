@@ -115,6 +115,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    public ShoppingCart ensureCart(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
+        if (user.getShoppingCart() != null) {
+            return user.getShoppingCart();
+        }
+        ShoppingCart cart = shoppingCartRepository.save(new ShoppingCart());
+        user.setShoppingCart(cart);
+        userRepository.save(user);
+        log.info("Created cart for user id={}", userId);
+        return cart;
+    }
+
+    @Override
+    @Transactional
     public User updateUser(User user, Long id) {
         User existing = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found: " + id));
