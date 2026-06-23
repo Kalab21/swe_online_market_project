@@ -1,50 +1,112 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
       layout:decorate="~{layouts/master-layout}">
 <head>
-    <title>MarketHub</title>
+    <title>Welcome</title>
 </head>
 <body>
-    <div layout:fragment="content" style="padding-top:2em;" class="container">
-        <div class="text-center mb-4">
-            <h1 class="display-4 font-weight-bold">Welcome to <span class="text-primary">MarketHub</span></h1>
-            <p class="lead text-muted">Your one-stop marketplace for buyers and sellers.</p>
+<div layout:fragment="content">
+    <!-- Hero -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center gy-4">
+                <div class="col-lg-6">
+                    <h1>The smarter way to <span>buy &amp; sell</span> online.</h1>
+                    <p class="mt-3 mb-4">MarketHub connects buyers and sellers on one powerful platform. Browse thousands of products or list your own in minutes.</p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a th:href="@{/onlinemarket/public/signup}" class="btn btn-primary btn-lg btn-icon">
+                            <i class="fa-solid fa-rocket"></i>Get Started Free
+                        </a>
+                        <a th:href="@{/onlinemarket/public/login}" class="btn btn-nav-outline btn-lg">
+                            Sign In
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="hero-card">
+                                <i class="fa-solid fa-boxes-stacked d-block"></i>
+                                <h5>Browse Products</h5>
+                                <p>Discover products from verified sellers across categories.</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="hero-card">
+                                <i class="fa-solid fa-tag d-block"></i>
+                                <h5>Sell Anything</h5>
+                                <p>List products quickly and reach buyers instantly.</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="hero-card">
+                                <i class="fa-solid fa-cart-shopping d-block"></i>
+                                <h5>Easy Checkout</h5>
+                                <p>Add to cart and check out with just a few clicks.</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="hero-card">
+                                <i class="fa-solid fa-shield-halved d-block"></i>
+                                <h5>Secure Platform</h5>
+                                <p>Role-based access and admin oversight keeps it safe.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <hr/>
-        <div class="row mt-4">
-            <div class="col-md-4 mb-4">
-                <div class="card border-primary h-100">
-                    <div class="card-header bg-primary text-white">Buy</div>
-                    <div class="card-body d-flex flex-column">
-                        <p class="card-text">Browse products from our trusted sellers.</p>
-                        <a href="/onlinemarket/public/login" class="btn btn-primary mt-auto">Shop Now</a>
+    </section>
+
+    <!-- Features row below hero -->
+    <div class="container mt-5">
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <div class="mh-card h-100">
+                    <div class="card-body d-flex flex-column align-items-center">
+                        <div class="dashboard-card card-icon icon-blue mb-3">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <h5 class="fw-bold">Shop Now</h5>
+                        <p class="text-muted small mb-3">Sign in and browse products from our trusted seller network.</p>
+                        <a th:href="@{/onlinemarket/public/login}" class="btn btn-primary mt-auto btn-icon">
+                            <i class="fa-solid fa-right-to-bracket"></i>Sign In to Browse
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card border-success h-100">
-                    <div class="card-header bg-success text-white">Sell</div>
-                    <div class="card-body d-flex flex-column">
-                        <p class="card-text">List your products and reach more customers.</p>
-                        <a href="/onlinemarket/public/signup" class="btn btn-success mt-auto">Start Selling</a>
+            <div class="col-md-4">
+                <div class="mh-card h-100">
+                    <div class="card-body d-flex flex-column align-items-center">
+                        <div class="dashboard-card card-icon icon-green mb-3">
+                            <i class="fa-solid fa-store"></i>
+                        </div>
+                        <h5 class="fw-bold">Start Selling</h5>
+                        <p class="text-muted small mb-3">Create a seller account and start listing your products today.</p>
+                        <a th:href="@{/onlinemarket/public/signup}" class="btn btn-success mt-auto btn-icon">
+                            <i class="fa-solid fa-user-plus"></i>Sign Up as Seller
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card border-secondary h-100">
-                    <div class="card-header bg-secondary text-white">Sign In</div>
-                    <div class="card-body d-flex flex-column">
-                        <p class="card-text">Already have an account? Sign in to continue.</p>
-                        <a href="/onlinemarket/public/login" class="btn btn-secondary mt-auto">Sign In</a>
+            <div class="col-md-4">
+                <div class="mh-card h-100">
+                    <div class="card-body d-flex flex-column align-items-center">
+                        <div class="dashboard-card card-icon icon-purple mb-3">
+                            <i class="fa-solid fa-gauge-simple-high"></i>
+                        </div>
+                        <h5 class="fw-bold">Your Dashboard</h5>
+                        <p class="text-muted small mb-3">Already a member? Jump straight to your personalized dashboard.</p>
+                        <a th:href="@{/onlinemarket/secured/services}" class="btn btn-outline-primary mt-auto btn-icon">
+                            <i class="fa-solid fa-arrow-right"></i>Go to Dashboard
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <th:block layout:fragment="footer"></th:block>
-
+</div>
 </body>
 </html>

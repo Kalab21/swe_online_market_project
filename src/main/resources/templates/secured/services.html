@@ -1,97 +1,108 @@
-    <!DOCTYPE html>
-    <html lang="en" xmlns:th="http://www.thymeleaf.org"
-          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-          xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-          layout:decorate="~{layouts/master-layout}">
-    <head>
-        <title>MarketHub — Services</title>
-    </head>
-    <body>
-        <div layout:fragment="content" style="padding-top:1em;" class="container">
-            <h2>Welcome to MarketHub</h2>
-            <h5 th:text="'Welcome, ' + ${currentUser.firstName} + '!'"></h5>
-            <hr/>
-            <div style="font-size: 1em">
-                <br/>
-                <div class="row">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      layout:decorate="~{layouts/master-layout}">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="fa-solid fa-gauge-simple-high me-2 text-primary" style="font-size:1.2rem;"></i>Dashboard
+        </h1>
+        <p class="page-subtitle" th:text="'Welcome back, ' + ${currentUser.firstName} + '! Here\'s what you can do today.'"></p>
+    </div>
+    <hr class="section-divider"/>
 
-                    <div sec:authorize="hasAuthority('ROLE_BUYER')" class="col-md-4">
-                        <div style="font-size: 1em;">
-                            <div class="card border-primary mb-3" style="max-width: 20rem;">
-                                <div class="card-header">WELCOME TO ONLINE MARKET SYSTEM</div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Buyer Tools</h4>
-                                    <p class="card-text">
-                                        <a style="text-decoration: inherit;" href="/onlinemarket/secured/services/products/list">
-                                            List of Products...
-                                        </a>
-                                    </p>
-                                    <p class="card-text">
-                                        <a style="text-decoration: inherit;" th:href="@{|/onlinemarket/cart/${currentUser.userId}|}">
-                                            Shopping Cart
-                                        </a>
-                                    </p>
-                                    <p class="card-text">
-                                        <a style="text-decoration: inherit;"  th:href="@{|/orders/user/${currentUser.userId}|}">
-                                            View Orders
-                                        </a>
-                                    </p>
-                                </div>
-                                </a>
-                            </div>
-                        </div>
+    <div class="row g-4">
+
+        <!-- BUYER -->
+        <div sec:authorize="hasAuthority('ROLE_BUYER')" class="col-md-6 col-lg-4">
+            <div class="card dashboard-card h-100">
+                <div class="card-body">
+                    <div class="card-icon icon-blue">
+                        <i class="fa-solid fa-cart-shopping"></i>
                     </div>
-
-
-
-                    <div sec:authorize="hasAuthority('ROLE_SELLER')" class="col-md-4">
-                        <div style="font-size: 1em;">
-                            <div class="card border-primary mb-3" style="max-width: 20rem;">
-                                <a style="text-decoration: inherit;" href="/onlinemarket/secured/services/seller/sellerPage">
-                                    <div style="color: #1a1a1a;" class="card-header">Welcome Online market Seller</div>
-                                    <div class="card-body">
-                                        <h4 class="card-title">Seller Options</h4>
-                                        <p class="card-text">
-                                            <a style="text-decoration: inherit;" th:href="@{|/onlinemarket/secured/services/products/my-products/${currentUser.userId}|}">
-                                                List of products
-                                            </a>
-                                        </p>
-                                        <p class="card-text">
-                                            Add Products
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
+                    <div class="card-title">Buyer Tools</div>
+                    <div class="card-text">Shop products, manage your cart, and track your orders.</div>
+                    <div class="card-links">
+                        <a href="/onlinemarket/secured/services/products/list">
+                            <i class="fa-solid fa-boxes-stacked"></i>Browse Products
+                        </a>
+                        <a th:href="@{/onlinemarket/cart/me}">
+                            <i class="fa-solid fa-cart-shopping"></i>My Shopping Cart
+                        </a>
+                        <a th:href="@{|/orders/user/${currentUser.userId}|}">
+                            <i class="fa-solid fa-receipt"></i>View My Orders
+                        </a>
                     </div>
-
-                    <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="col-md-4">
-                        <div style="font-size: 1em;">
-                            <div class="card border-primary mb-3" style="max-width: 20rem;">
-                                <div class="card-header">This is System Administration</div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Admin Tools</h4>
-                                    <p class="card-text">
-                                        <a href="/onlinemarket/secured/services/users/sellers">
-                                            Approve Seller
-                                        </a>
-                                    </p>
-                                    <p class="card-text">
-                                        <a href="/onlinemarket/secured/services/admin/usrmgmt/list">
-                                            Manage Users
-                                        </a>
-                                    </p>
-                                </div>
-                                </a>
-                            </div>
-                        </div>
+                    <div class="card-footer-btn">
+                        <a href="/onlinemarket/secured/services/products/list" class="btn btn-primary btn-icon w-100">
+                            <i class="fa-solid fa-arrow-right"></i>Start Shopping
+                        </a>
                     </div>
                 </div>
-
             </div>
         </div>
 
-        <th:block layout:fragment="footer"></th:block>
+        <!-- SELLER -->
+        <div sec:authorize="hasAuthority('ROLE_SELLER')" class="col-md-6 col-lg-4">
+            <div class="card dashboard-card h-100">
+                <div class="card-body">
+                    <div class="card-icon icon-green">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <div class="card-title">Seller Tools</div>
+                    <div class="card-text">Manage your product listings and grow your sales.</div>
+                    <div class="card-links">
+                        <a href="/onlinemarket/secured/services/products/my-products">
+                            <i class="fa-solid fa-list"></i>My Product Listings
+                        </a>
+                        <a href="/onlinemarket/secured/services/products/new-product">
+                            <i class="fa-solid fa-plus"></i>Add New Product
+                        </a>
+                    </div>
+                    <div class="card-footer-btn">
+                        <a href="/onlinemarket/secured/services/seller/sellerPage" class="btn btn-success btn-icon w-100">
+                            <i class="fa-solid fa-arrow-right"></i>Seller Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    </body>
-    </html>
+        <!-- ADMIN -->
+        <div sec:authorize="hasAuthority('ROLE_ADMIN')" class="col-md-6 col-lg-4">
+            <div class="card dashboard-card h-100">
+                <div class="card-body">
+                    <div class="card-icon icon-purple">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="card-title">Admin Tools</div>
+                    <div class="card-text">Manage users, approve sellers, and oversee the platform.</div>
+                    <div class="card-links">
+                        <a href="/onlinemarket/secured/services/users/sellers">
+                            <i class="fa-solid fa-user-check"></i>Approve Sellers
+                        </a>
+                        <a href="/onlinemarket/secured/services/admin/usrmgmt/list">
+                            <i class="fa-solid fa-users-gear"></i>Manage All Users
+                        </a>
+                        <a href="/onlinemarket/secured/services/products/list">
+                            <i class="fa-solid fa-boxes-stacked"></i>View Product Catalog
+                        </a>
+                    </div>
+                    <div class="card-footer-btn">
+                        <a href="/onlinemarket/secured/services/admin/adminPage" class="btn btn-outline-primary btn-icon w-100">
+                            <i class="fa-solid fa-arrow-right"></i>Admin Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -3,64 +3,79 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/master-layout}">
 <head>
-    <title>MarketHub — Products</title>
+    <title>Products</title>
 </head>
 <body>
-<div layout:fragment="content" class="container" style="padding-top:2em;">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="page-title mb-0">Products</h3>
-        <a th:href="@{/onlinemarket/cart/me}" class="btn btn-outline-success">View Cart</a>
+<div layout:fragment="content" class="container">
+    <div class="page-header d-flex align-items-start justify-content-between flex-wrap gap-3">
+        <div>
+            <h1 class="page-title"><i class="fa-solid fa-boxes-stacked me-2 text-primary" style="font-size:1.2rem;"></i>Products</h1>
+            <p class="page-subtitle" th:if="${products.totalElements > 0}"
+               th:text="|${products.totalElements} product(s) available|">Browse our catalogue</p>
+        </div>
+        <a th:href="@{/onlinemarket/cart/me}" class="btn btn-outline-primary btn-icon">
+            <i class="fa-solid fa-cart-shopping"></i>View Cart
+        </a>
     </div>
-    <hr/>
+    <hr class="section-divider"/>
 
-    <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>SKU</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Qty</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="product,iterStat : ${products.content}">
-            <td th:text="${products.number * products.size + iterStat.count}"></td>
-            <td th:text="${product.sku}"></td>
-            <td th:text="${product.name}"></td>
-            <td th:text="'$' + ${product.price}"></td>
-            <td th:text="${product.description}"></td>
-            <td th:text="${product.quantity}"></td>
-            <td>
-                <a th:href="@{|/onlinemarket/cart/${currentUser.shoppingCart?.cartId}/addproduct/${product.productId}|}"
-                   class="btn btn-sm btn-success">Add to Cart</a>
-            </td>
-        </tr>
-        <tr th:if="${products.totalElements == 0}">
-            <td colspan="7" class="text-center text-muted">No products available.</td>
-        </tr>
-        </tbody>
-    </table>
+    <!-- Product grid -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4" th:if="${products.totalElements > 0}">
+        <div class="col" th:each="product : ${products.content}">
+            <div class="product-card">
+                <div class="product-img-placeholder">
+                    <i class="fa-solid fa-box-open"></i>
+                </div>
+                <div class="product-body">
+                    <div class="product-sku" th:text="${product.sku}"></div>
+                    <div class="product-name" th:text="${product.name}"></div>
+                    <div class="product-desc" th:text="${product.description}"></div>
+                    <div class="d-flex align-items-end justify-content-between">
+                        <span class="product-price" th:text="'$' + ${#numbers.formatDecimal(product.price, 1, 2)}"></span>
+                        <span class="product-qty">
+                            <i class="fa-solid fa-layer-group me-1" style="font-size:0.7rem;color:#94a3b8;"></i>
+                            <span th:text="${product.quantity} + ' in stock'"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="product-footer">
+                    <a th:href="@{|/onlinemarket/cart/${currentUser.shoppingCart?.cartId}/addproduct/${product.productId}|}"
+                       class="btn btn-primary w-100 btn-icon">
+                        <i class="fa-solid fa-cart-plus"></i>Add to Cart
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <nav th:if="${products.totalPages > 1}" aria-label="Product pages">
+    <!-- Empty state -->
+    <div th:if="${products.totalElements == 0}" class="empty-state">
+        <i class="fa-solid fa-box-open d-block"></i>
+        <h5>No products yet</h5>
+        <p>Check back later — sellers are adding products all the time.</p>
+    </div>
+
+    <!-- Pagination -->
+    <nav th:if="${products.totalPages > 1}" aria-label="Product pages" class="mt-4">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:classappend="${products.first} ? 'disabled'">
-                <a class="page-link" th:href="@{/onlinemarket/secured/services/products/list(page=${products.number - 1}, size=${products.size})}">Previous</a>
+                <a class="page-link" th:href="@{/onlinemarket/secured/services/products/list(page=${products.number - 1}, size=${products.size})}">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </a>
             </li>
             <li class="page-item" th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}"
                 th:classappend="${i == products.number} ? 'active'">
                 <a class="page-link" th:href="@{/onlinemarket/secured/services/products/list(page=${i}, size=${products.size})}" th:text="${i + 1}"></a>
             </li>
             <li class="page-item" th:classappend="${products.last} ? 'disabled'">
-                <a class="page-link" th:href="@{/onlinemarket/secured/services/products/list(page=${products.number + 1}, size=${products.size})}">Next</a>
+                <a class="page-link" th:href="@{/onlinemarket/secured/services/products/list(page=${products.number + 1}, size=${products.size})}">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
             </li>
         </ul>
+        <p class="text-center text-muted small mt-2"
+           th:text="|Showing ${products.number * products.size + 1}–${products.number * products.size + products.numberOfElements} of ${products.totalElements}|"></p>
     </nav>
-    <p class="text-center text-muted small" th:if="${products.totalElements > 0}"
-       th:text="|Showing ${products.number * products.size + 1}–${products.number * products.size + products.numberOfElements} of ${products.totalElements} products|"></p>
 </div>
-<th:block layout:fragment="footer"></th:block>
 </body>
 </html>

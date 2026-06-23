@@ -1,6 +1,15 @@
-<footer class="footer" th:fragment="footer" xmlns:th="http://www.thymeleaf.org">
+<footer class="mh-footer" th:fragment="footer" xmlns:th="http://www.thymeleaf.org">
     <div class="container">
-        <span class="text-muted">MarketHub</span>
-        <span style="float:right;" class="text-muted">&copy; February 2023</span>
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+            <div>
+                <span class="footer-brand"><i class="fa-solid fa-store me-1"></i>MarketHub</span>
+                <span class="ms-2">— Buy, sell, and manage with ease.</span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <a th:href="@{/onlinemarket/public/home}">Home</a>
+                <a th:href="@{/onlinemarket/public/login}">Sign In</a>
+                <span>&copy; 2025</span>
+            </div>
+        </div>
     </div>
 </footer>
