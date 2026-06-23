@@ -44,6 +44,10 @@ A full-stack e-commerce web application built with Spring Boot. Supports three r
 |-----------------|-----------------|
 | ![Admin Dashboard](screenshots/dashboard-admin.png) | ![User Management](screenshots/admin.png) |
 
+| My Orders | |
+|-----------|--|
+| ![My Orders](screenshots/orders.png) | |
+
 ## Demo Credentials
 
 Seeded automatically on first run:
