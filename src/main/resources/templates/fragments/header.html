@@ -51,8 +51,12 @@
                         </span>
                     </li>
                     <li sec:authorize="hasAuthority('ROLE_BUYER')" class="nav-item">
-                        <a class="nav-link" th:href="@{/onlinemarket/cart/me}">
+                        <a class="nav-link position-relative" th:href="@{/onlinemarket/cart/me}">
                             <i class="fa-solid fa-cart-shopping"></i>Cart
+                            <span th:if="${cartItemCount != null and cartItemCount > 0}"
+                                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                  style="font-size:0.6rem;"
+                                  th:text="${cartItemCount}"></span>
                         </a>
                     </li>
                     <li sec:authorize="isAnonymous()" class="nav-item">

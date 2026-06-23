@@ -9,6 +9,7 @@ import lombok.Setter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 @Getter
 @Setter
@@ -26,6 +27,6 @@ public class ShoppingCart implements Serializable {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name= "carts_products")
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
 }
