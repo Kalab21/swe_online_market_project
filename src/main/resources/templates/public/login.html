@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/master-layout}">
 <head>
-    <title>OnlineMarket - Sign In</title>
+    <title>MarketHub — Sign In</title>
 </head>
 <body>
     <div layout:fragment="content" style="padding-top:1em;" class="container">
@@ -16,11 +16,11 @@
                 </div>
                 <div class="col-md-6">
                     <div class="card border-secondary mb-4" style="max-width: 60rem;">
-                        <div class="card-header">Use your online market Account</div>
+                        <div class="card-header">Use your MarketHub Account</div>
                         <div class="card-body">
-                            <h4 class="card-title">Sign In with your online market Account</h4>
+                            <h4 class="card-title">Sign In to MarketHub</h4>
                             <p class="card-text">
-                                Enter your online market Username and Password below, to sign in.
+                                Enter your MarketHub username and Password below, to sign in.
                             </p>
                             <div>
                                 <form name="formLogin" th:action="@{/onlinemarket/public/login}" method="post">

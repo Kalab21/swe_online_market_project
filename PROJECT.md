@@ -1,4 +1,4 @@
-# Online Market System — Technical Overview
+# MarketHub — Technical Overview
 
 ## Project Summary
 

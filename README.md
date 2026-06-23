@@ -1,4 +1,4 @@
-# CS425 Online Market System
+# MarketHub
 
 ![CI](https://github.com/Kalab21/swe_online_market_project/actions/workflows/ci.yml/badge.svg)
 
