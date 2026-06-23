@@ -1,96 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      layout:decorate="~{layouts/master-layout}"
->
+      layout:decorate="~{layouts/master-layout}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="">
-    <link rel="icon" href="favicon.ico">
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.2/cerulean/bootstrap.min.css" rel="stylesheet" integrity="sha384-EmRcsPP774S9MOi4ywB+JXUWjYnBdyInMzG2XsC5siZEUpexqxOMJW358dCYEjPu" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/master.css}">
-    <title>MarketHub — Orders</title>
+    <title>My Orders</title>
 </head>
 <body>
-<div layout:fragment="content" style="padding-top:1em;" class="container">
+<div layout:fragment="content" class="container">
+    <div class="page-header">
+        <h1 class="page-title">
+            <i class="fa-solid fa-receipt me-2 text-primary" style="font-size:1.2rem;"></i>My Orders
+        </h1>
+        <p class="page-subtitle">Track the status of your placed orders.</p>
+    </div>
+    <hr class="section-divider"/>
 
-
-
-<!--    <div style="margin-top:1em;margin-bottom:1em;" class="container">-->
-<!--        <div>-->
-<!--            <span style="font-size: 2em; color: #32a5e7;">List of Orders</span>-->
-<!--            <span style="float:right;">-->
-<!--            <a class="btn btn-outline-success btn-lg" th:href="@{|/onlinemarket/cart/${currentUser.userId}|}">Shopping Cart</a>-->
-
-<!--                &lt;!&ndash;            <a class="btn btn-outline-success btn-lg" href="/onlinemarket/cart/">Shopping Cart</a>&ndash;&gt;-->
-<!--            </span>-->
-<!--        </div>-->
-<!--        &lt;!&ndash; Search panel &ndash;&gt;-->
-
-
-        <div style="font-size: 1em">
-            <table class="table table-striped">
+    <div th:if="${orders != null and !orders.isEmpty()}">
+        <div class="table-responsive">
+            <table class="table mh-table">
                 <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Order Status</th>
-                    <th scope="col">Created At</th>
-                    <th scope="col">Price</th>
-
-                </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr th:each="o,iterStat : ${orders}">
-
-                    <th scope="row" th:text="${iterStat.count}+${'.'}"></th>
-                    <td th:text="${o.orderStatus}"></td>
-                    <td th:text="${o.createdAt}"></td>
-                    <td th:text="${o.price}"></td>
-
-
-
-                </tr>
-                <tr th:if="${orders.size() < 1}">
-                    <td colspan="8" th:align="center">No Order found</td>
-                </tr>
+                    <tr th:each="o, iterStat : ${orders}">
+                        <td th:text="${iterStat.count}"></td>
+                        <td>
+                            <span class="badge"
+                                  th:classappend="${o.orderStatus == 'Pending'} ? 'bg-warning text-dark' : 'bg-success'"
+                                  th:text="${o.orderStatus}"></span>
+                        </td>
+                        <td th:text="${o.createdAt}"></td>
+                        <td th:text="'$' + ${#numbers.formatDecimal(o.price, 1, 2)}"></td>
+                    </tr>
                 </tbody>
             </table>
-
         </div>
     </div>
 
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="confirmDeleteBookModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Confirm Delete</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you wish to delete this product data?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-primary">Yes</button>
-                </div>
-            </div>
-        </div>
+    <div th:if="${orders == null or orders.isEmpty()}" class="empty-state">
+        <i class="fa-solid fa-receipt d-block"></i>
+        <h5>No orders yet</h5>
+        <p>Add products to your cart and check out to place your first order.</p>
+        <a href="/onlinemarket/secured/services/products/list" class="btn btn-primary btn-icon mt-2">
+            <i class="fa-solid fa-boxes-stacked"></i>Browse Products
+        </a>
     </div>
-
-    <p>&nbsp;</p>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-
 </div>
 </body>
 </html>
