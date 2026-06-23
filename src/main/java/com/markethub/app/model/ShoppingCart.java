@@ -24,7 +24,7 @@ public class ShoppingCart implements Serializable {
     @OneToOne(mappedBy = "shoppingCart")
     private User buyer;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name= "carts_products")
     private List<Product> products;
 

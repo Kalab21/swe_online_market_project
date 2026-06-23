@@ -20,6 +20,12 @@ public class LibraryServicesController {
         return "secured/services";
     }
 
+    @GetMapping(value = {"/secured/services/admin/adminPage","/onlinemarket/secured/services/admin/adminPage"})
+    public String adminPage(Model model) {
+        model.addAttribute("currentUser", userDetailsService.getCurrentUser());
+        return "secured/services/admin/adminPage";
+    }
+
     @GetMapping(value = {"/secured/services/admin/usrmgmt/list","/onlinemarket/secured/services/admin/usrmgmt/list"})
     public String usrmgmtList(Model model) {
         model.addAttribute("sellers", userService.getAllUsers());

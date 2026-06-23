@@ -25,7 +25,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     @Transactional(readOnly = true)
     public ShoppingCart getShoppingCartById(long id) {
-        return shoppingCartRepository.getReferenceById(id);
+        return shoppingCartRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart not found: " + id));
     }
 
     @Override
