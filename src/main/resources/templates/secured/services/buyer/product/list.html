@@ -55,7 +55,7 @@
                 <td th:text="${product.description}"></td>
                 <td th:text="${product.quantity}"></td>
                 <td>
-                    <a th:href="@{|/onlinemarket/cart/${currentUser.shoppingCart.getCartId}/addproduct/${product.productId}|}">Add to cart</a>
+                    <a th:href="@{|/onlinemarket/cart/${currentUser.shoppingCart?.cartId}/addproduct/${product.productId}|}">Add to cart</a>
                 </td>
             </tr>
             <tr th:if="${products.totalElements == 0}">
